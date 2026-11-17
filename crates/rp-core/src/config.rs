@@ -3,9 +3,22 @@
 //! Top-level package options are defaults; each entry in `packages`
 //! (keyed by path, "." for the root) overrides them.
 
+mod inherit;
+mod sections;
+#[cfg(test)]
+mod tests;
+
+use anyhow::{Context, Result};
 use serde::Deserialize;
 use std::collections::BTreeMap;
 use std::path::Path;
+
+pub use sections::default_sections;
+
+const DEFAULT_TITLE_PATTERN: &str = "chore${scope}: release${component} ${version}";
+const DEFAULT_HEADER: &str = ":robot: I have created a release *beep* *boop*";
+const DEFAULT_LABEL: &str = "autorelease: pending";
+const DEFAULT_RELEASE_LABEL: &str = "autorelease: tagged";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Default)]
 #[serde(rename_all = "kebab-case")]
@@ -91,21 +104,29 @@ impl Config {
     /// label "autorelease: pending", release label "autorelease: tagged",
     /// default changelog sections = feat/fix/perf/revert visible,
     /// others hidden (see [`default_sections`]).
-    pub fn load(path: &Path) -> anyhow::Result<Self> {
-        let _ = path;
-        todo!()
+    pub fn load(path: &Path) -> Result<Self> {
+        let text = std::fs::read_to_string(path)
+            .with_context(|| format!("reading config {}", path.display()))?;
+        Self::from_json(&text).with_context(|| format!("parsing config {}", path.display()))
     }
 
-    pub fn from_json(json: &str) -> anyhow::Result<Self> {
-        let _ = json;
-        todo!()
+    pub fn from_json(json: &str) -> Result<Self> {
+        let root: serde_json::Value =
+            serde_json::from_str(json).context("config is not valid JSON")?;
+        let obj = root.as_object().context("config must be a JSON object")?;
+        Ok(Self {
+            packages: inherit::resolve_packages(obj)?,
+            pull_request_title_pattern: inherit::string_option(
+                obj,
+                "pull-request-title-pattern",
+                DEFAULT_TITLE_PATTERN,
+            ),
+            pull_request_header: inherit::string_option(obj, "pull-request-header", DEFAULT_HEADER),
+            label: inherit::string_option(obj, "label", DEFAULT_LABEL),
+            release_label: inherit::string_option(obj, "release-label", DEFAULT_RELEASE_LABEL),
+            separate_pull_requests: inherit::bool_option(obj, "separate-pull-requests"),
+        })
     }
 }
 
-/// Default sections in release-please order.
-pub fn default_sections() -> Vec<ChangelogSection> {
-    todo!()
-}
-
-#[allow(dead_code)]
 type RawPackages = BTreeMap<String, serde_json::Value>;
