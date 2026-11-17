@@ -1,0 +1,7 @@
+release-please-rs
+Copyright 2026 Anton Feldmann
+
+This project is a Rust reimplementation inspired by release-please
+(https://github.com/googleapis/release-please), Copyright Google LLC,
+licensed under the Apache License, Version 2.0. Configuration format and
+release workflow follow release-please; no TypeScript source is included.

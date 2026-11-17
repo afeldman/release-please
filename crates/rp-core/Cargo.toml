@@ -1,0 +1,17 @@
+[package]
+name = "rp-core"
+description = "Config, conventional commits and version rules"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+thiserror.workspace = true
+semver.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+git-conventional.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

@@ -1,0 +1,26 @@
+[package]
+name = "rp-cli"
+description = "release-please-rs command line and CI plugin"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "release-please-rs"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+chrono.workspace = true
+semver.workspace = true
+serde_json.workspace = true
+rp-core.workspace = true
+rp-updaters.workspace = true
+rp-changelog.workspace = true
+rp-git.workspace = true
+rp-forge.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+httpmock.workspace = true

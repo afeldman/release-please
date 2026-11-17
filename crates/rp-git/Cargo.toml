@@ -1,0 +1,12 @@
+[package]
+name = "rp-git"
+description = "Thin wrapper around the git CLI"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

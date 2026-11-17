@@ -1,0 +1,36 @@
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+repository = "https://github.com/afeldman/release-please"
+rust-version = "1.85"
+
+[workspace.dependencies]
+rp-core = { path = "crates/rp-core" }
+rp-updaters = { path = "crates/rp-updaters" }
+rp-changelog = { path = "crates/rp-changelog" }
+rp-git = { path = "crates/rp-git" }
+rp-forge = { path = "crates/rp-forge" }
+anyhow = "1"
+thiserror = "2"
+semver = { version = "1", features = ["serde"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+toml_edit = "0.22"
+regex = "1"
+git-conventional = "0.12"
+minijinja = "2"
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+ureq = { version = "2", features = ["json"] }
+clap = { version = "4", features = ["derive", "env"] }
+tempfile = "3"
+httpmock = "0.7"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
