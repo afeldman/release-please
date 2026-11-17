@@ -1366,6 +1366,7 @@ dependencies = [
  "minijinja",
  "rp-core",
  "semver",
+ "serde",
 ]
 
 [[package]]
