@@ -1,7 +1,8 @@
-release-please-rs
+release-please (Rust)
 Copyright 2026 Anton Feldmann
 
-This project is a Rust reimplementation inspired by release-please
-(https://github.com/googleapis/release-please), Copyright Google LLC,
-licensed under the Apache License, Version 2.0. Configuration format and
-release workflow follow release-please; no TypeScript source is included.
+This product is an independent Rust reimplementation of the release
+workflow of release-please (https://github.com/googleapis/release-please),
+Copyright Google LLC, licensed under the Apache License, Version 2.0.
+The configuration format and workflow follow release-please; no source
+code of release-please is included. Not affiliated with Google.
